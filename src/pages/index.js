@@ -13,7 +13,9 @@ export default function Home() {
 
   if (status === 'loading') {
     return <p>Loading...</p>
-  } else if (status === 'unauthenticated') {
+  }
+  
+  if (status === 'unauthenticated') {
     return (
       <div>
         <LoginButton />

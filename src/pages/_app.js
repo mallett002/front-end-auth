@@ -1,10 +1,13 @@
-import { NextAuthProvider } from "../providers";
+import { SessionProvider } from "next-auth/react"
 import '@/styles/globals.css'
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
-    <NextAuthProvider>
+    <SessionProvider session={session}>
       <Component {...pageProps} />
-    </NextAuthProvider>
-  );
+    </SessionProvider>
+  )
 }
