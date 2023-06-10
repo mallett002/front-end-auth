@@ -1,11 +1,26 @@
+'use client'
 import {
   LoginButton,
   LogoutButton,
-  ProfileButton,
-  RegisterButton,
+  ProfileButton
 } from "../components/buttons";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  console.log({ session });
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  } else if (status === 'unauthenticated') {
+    return (
+      <div>
+        <LoginButton />
+      </div>
+    )
+  }
+
   return (
     <main
       style={{
@@ -16,8 +31,6 @@ export default function Home() {
       }}
     >
       <div>
-        <LoginButton />
-        <RegisterButton />
         <LogoutButton />
         <ProfileButton />
       </div>

@@ -1,22 +1,9 @@
-// import NextAuth from 'next-auth'
-// import Providers from 'next-auth/providers'
-
-// export default NextAuth({
-//   providers: [
-//     Providers.Cognito({
-//       clientId: process.env.COGNITO_CLIENT_ID,
-//       clientSecret: process.env.COGNITO_CLIENT_SECRET,
-//       domain: process.env.COGNITO_DOMAIN,
-//     })
-//   ],
-//   debug: process.env.NODE_ENV === 'development' ? true : false
-// })
-
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 
+
+// guide: https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/
 export const authOptions = {
-    // Configure one or more authentication providers
     providers: [CognitoProvider({
         clientId: process.env.COGNITO_CLIENT_ID,
         clientSecret: process.env.COGNITO_CLIENT_SECRET,
