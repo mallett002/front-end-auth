@@ -13,20 +13,19 @@ export const authOptions = {
     })],
 
     callbacks: {
-        async jwt({ token, account }) {
+        async jwt(jwtArg) {
+            console.log({jwtArg});
             
-            console.log('in jwt: ', {token, account});
-
-            if (account) {
-                token.accessToken = account.access_token
+            if (jwtArg.account) {
+                jwtArg.token.accessToken = jwtArg.account.access_token
             }
 
-            return token;
+            return jwtArg.token;
         },
-        async session(sessionObject) {
-            const { session, token, user } = sessionObject;
+        async session(sessionArg) {
+            console.log(JSON.stringify({sessionArg}, null, 2));
             
-            console.log('in session: ', {session, token, user});
+            const { session, token, user } = sessionArg;
             
             session.accessToken = token.accessToken
 
