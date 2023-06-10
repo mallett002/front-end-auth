@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 
+// Get username off ID token?
+// Guide: https://kelvinmwinuka.com/social-login-with-cognito-and-nextauth
 
 // guide: https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/
 export const authOptions = {
