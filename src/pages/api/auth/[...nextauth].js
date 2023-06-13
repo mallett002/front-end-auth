@@ -18,10 +18,7 @@ export const authOptions = {
 
     callbacks: {
         // user, account, profile and isNewUser (first time log in), other calls, just token
-        async jwt(jwtArg) {
-            console.log(JSON.stringify({ jwtArg }, null, 2));
-            const {account, token, profile} = jwtArg;
-
+        async jwt({account, token, profile}) {
             // put things on the token to persist them to the session
             const sessionToken = token;
 
@@ -38,14 +35,9 @@ export const authOptions = {
         },
 
         // getSession(), useSession(), /api/auth/session
-        async session(sessionArg) { // session, token
+        async session({ session, token }) { // session, token
             // The session callback is called whenever a session is checked
-            console.log(JSON.stringify({ sessionArg }, null, 2));
-
             // put things on the session to expose them to the app
-
-            const { session, token } = sessionArg;
-
             session.accessToken = token.accessToken;
             session.idToken = token.idToken;
             session.givenName = token.givenName;

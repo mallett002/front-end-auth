@@ -6,10 +6,10 @@ import {
 } from "../components/buttons";
 import { useSession } from "next-auth/react";
 
-export default function Home() {
-  const { data: session, status } = useSession();
+export default function Home({gift}) {
+  const { data, status } = useSession();
 
-  console.log({ session });
+  console.log({ data, gift });
 
   if (status === 'loading') {
     return <p>Loading...</p>
@@ -38,4 +38,12 @@ export default function Home() {
       </div>
     </main>
   );
+}
+
+export const getServerSideProps = async () => {
+  const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/repos/vercel/next.js`);
+  const gift = await res.json();
+  console.log({stuffInServer: gift});
+
+  return { props: { gift } };
 }
