@@ -8,7 +8,7 @@ export const LoginButton = () => {
         <button
             style={{ marginRight: 10 }}
             onClick={() => signIn('cognito', {
-                callbackUrl: `${window.location.origin}/protected`
+                callbackUrl: `${window.location.origin}/protected` // todo: maybe do this in the cognito stack, or in [...nextauth].js
             })}
         >
             Sign in

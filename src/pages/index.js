@@ -40,6 +40,7 @@ export default function Home({gift}) {
   );
 }
 
+// TODO: Maybe make this a server side component and use "useServerSession" to get the token
 export const getServerSideProps = async () => {
   const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/repos/vercel/next.js`);
   const gift = await res.json();
