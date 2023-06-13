@@ -16,10 +16,10 @@ export const LoginButton = () => {
     );
 };
 
-export const RegisterButton = () => {
+export const HomeButton = () => {
     return (
-        <Link href="/register" style={{ marginRight: 10 }}>
-            Register
+        <Link href="/" style={{ marginRight: 10 }}>
+            Home
         </Link>
     );
 };
@@ -33,5 +33,5 @@ export const LogoutButton = () => {
 };
 
 export const ProfileButton = () => {
-    return <Link href="/profile">Profile</Link>;
+    return <Link href="/protected">Profile</Link>;
 };

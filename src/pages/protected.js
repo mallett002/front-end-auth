@@ -1,5 +1,6 @@
 'use client'
 
+import { LogoutButton, HomeButton } from "@/components/buttons";
 import { useSession } from "next-auth/react";
 import Image from 'next/image'
 
@@ -12,10 +13,17 @@ const Protected = () => {
     if (data && data.user) {
 
         return (
-            <div style={{ paddingLeft: 20, marginTop: 30 }}>
-                <h3 style={{ marginBottom: 20 }}>User Info</h3>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{paddingRight: 15}}>
+            <div>
+                <div style={{ paddingLeft: 20, paddingRight: 20, marginTop: 30, display: 'flex', justifyContent: 'space-between' }}>
+                    <h3 style={{ marginBottom: 20 }}>User Info</h3>
+                    <div>
+                        <HomeButton />
+                        <LogoutButton />
+                    </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', paddingLeft: 20 }}>
+                    <div style={{ paddingRight: 15 }}>
                         <Image
                             src={data.user.image}
                             width={30}
@@ -26,6 +34,7 @@ const Protected = () => {
                     <p style={{ paddingRight: 15 }}>{data.givenName}</p>
                     <p>{data.user.email}</p>
                 </div>
+
             </div>
         );
     }
