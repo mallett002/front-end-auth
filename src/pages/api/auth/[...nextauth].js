@@ -13,7 +13,10 @@ export const authOptions = {
         clientSecret: process.env.COGNITO_CLIENT_SECRET,
         issuer: process.env.COGNITO_ISSUER,
         idToken: true,
-        checks: "nonce"
+        checks: "nonce",
+        authorization: {
+            scope: 'WishListResourceServer/*'
+        }
     })],
 
     callbacks: {
@@ -21,8 +24,10 @@ export const authOptions = {
         async jwt({account, token, profile}) {
             // put things on the token to persist them to the session
             const sessionToken = token;
+            console.log({token});
 
             if (account) {
+                console.log({inJwt: sessionToken.accessToken});
                 sessionToken.accessToken = account.access_token;
                 sessionToken.idToken = account.id_token;
             }

@@ -1,4 +1,3 @@
-'use client'
 import {
   LoginButton,
   LogoutButton,
@@ -40,23 +39,29 @@ export default function Home({ gift }) {
   );
 }
 
-// TODO: Maybe make this a server side component and use "useServerSession" to get the token
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
+
+  console.log({session});
   
-
   if (session) {
-    console.log({token: session.accessToken});
-    const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/family1/users/mallett002@gmail.com/gifts/gift1`, {
-      headers: {
-        Authorization: `Bearer ${session.idToken}`
-      }
-    });
-    const gift = await res.json();
-    console.log({ stuffInServer: gift });
+    console.log({accessToken: session.accessToken});
+    
+    try {
+      const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/family1/users/mallett002@gmail.com/gifts/gift1`, {
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`
+        }
+      });
+  
+      const gift = await res.json();
+  
+      return { props: { gift } };      
+    } catch (error) {
+      console.log({error});
+    }
 
-    return { props: { gift } };
   }
 
-  return { props: {} };
+  return { props: {gift: null} };
 };
