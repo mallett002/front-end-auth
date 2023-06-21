@@ -1,3 +1,4 @@
+import { LoginButton } from "@/components/buttons";
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 
@@ -7,27 +8,32 @@ import CognitoProvider from "next-auth/providers/cognito";
 
 // Sub: f4a804d8-d081-709d-d6ab-14448fc35e23
 // userId: Google_101398132283206901435
+
+const {
+    NEXTAUTH_URL,
+    COGNITO_ISSUER,
+    COGNITO_DOMAIN,
+    COGNITO_CLIENT_ID,
+    COGNITO_USER_POOL_ID,
+    COGNITO_CLIENT_SECRET,
+} = process.env;
+
+
 export const authOptions = {
+
     providers: [CognitoProvider({
-        clientId: process.env.COGNITO_CLIENT_ID,
-        clientSecret: process.env.COGNITO_CLIENT_SECRET,
-        issuer: process.env.COGNITO_ISSUER,
+        clientId: COGNITO_CLIENT_ID,
+        clientSecret: COGNITO_CLIENT_SECRET,
+        issuer: COGNITO_ISSUER,
         idToken: true,
-        checks: "nonce",
-        authorization: {
-            scope: 'WishListResourceServer/*'
-        }
+        checks: 'nonce',
     })],
 
     callbacks: {
-        // user, account, profile and isNewUser (first time log in), other calls, just token
-        async jwt({account, token, profile}) {
-            // put things on the token to persist them to the session
+        async jwt({ account, token, profile }) {
             const sessionToken = token;
-            console.log({token});
 
             if (account) {
-                console.log({inJwt: sessionToken.accessToken});
                 sessionToken.accessToken = account.access_token;
                 sessionToken.idToken = account.id_token;
             }
@@ -39,10 +45,7 @@ export const authOptions = {
             return sessionToken;
         },
 
-        // getSession(), useSession(), /api/auth/session
         async session({ session, token }) { // session, token
-            // The session callback is called whenever a session is checked
-            // put things on the session to expose them to the app
             session.accessToken = token.accessToken;
             session.idToken = token.idToken;
             session.givenName = token.givenName;
