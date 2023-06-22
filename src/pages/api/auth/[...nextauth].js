@@ -1,6 +1,7 @@
 import { LoginButton } from "@/components/buttons";
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
+import { CognitoJwtVerifier } from 'aws-jwt-verify';
 
 // Get username off ID token?
 // Guide: https://kelvinmwinuka.com/social-login-with-cognito-and-nextauth
@@ -49,6 +50,21 @@ export const authOptions = {
             session.accessToken = token.accessToken;
             session.idToken = token.idToken;
             session.givenName = token.givenName;
+
+            // decrypt the idToken to use claims in the app:
+            const verifier = CognitoJwtVerifier.create({
+                userPoolId: process.env.COGNITO_USER_POOL_ID,
+                tokenUse: "id",
+                clientId: process.env.COGNITO_CLIENT_ID,
+            });
+
+            try {
+                const payload = await verifier.verify(session.idToken);
+
+                session.sub = payload.sub;
+            } catch (err) {
+                console.log("Error decrypting token: ", err);
+            }
 
             return session;
         }
