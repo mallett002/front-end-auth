@@ -55,12 +55,12 @@ export const getServerSideProps = async (context) => {
       //   headers: {
       //     Authorization: `Bearer ${session.accessToken}`
       //   },
-      //   body: JSON.stringify({familyName: 'Cousins', familyImage: 'somerandomimage', email: 'mallett002@gmail.com'})
+      //   body: JSON.stringify({familyName: 'Mallett', familyImage: 'somerandomimage', email: 'mallett002@gmail.com'})
       // });
       // const json = await res.json();
       // console.log({json});
 
-      const familyId = 'e000cd90-441d-4765-afa1-23f7b6a50bb8';
+      const familyId = 'c00df541-e433-4c79-812e-24c13bcf2a22';
 
       /*CREATE GIFT*/
       // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/members/mallett002@gmail.com/gifts/`, {
@@ -69,14 +69,31 @@ export const getServerSideProps = async (context) => {
       //     Authorization: `Bearer ${session.accessToken}`
       //   },
       //   body: JSON.stringify({
-      //     "description": "hat",
+      //     "description": "brazil jersey",
+      //     "link": "amazon.com",
+      //     "title": "jersey"
+      //   })
+      // });
+      // console.log({res});
+
+      const giftId = '3eaa998e-5d73-4322-a8fa-e5c54cc7aecf';
+
+      /*UPDATE GIFT*/
+      // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/members/mallett002@gmail.com/gifts/${giftId}`, {
+      //   method: 'PUT',
+      //   headers: {
+      //     Authorization: `Bearer ${session.accessToken}`
+      //   },
+      //   body: JSON.stringify({
+      //     "description": "vikings hat",
+      //     "purchased": false,
       //     "link": "google.com",
       //     "title": "Hat"
       //   })
       // });
       // console.log({res});
-
-      // const giftId = 'e4130836-b352-464c-8ee2-6abf9b44dc51';
+      // const updatedGift = await res.json();
+      // console.log({updatedGift})
 
 
       // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/board`, {
@@ -105,7 +122,7 @@ export const getServerSideProps = async (context) => {
       //     Authorization: `Bearer ${session.accessToken}`
       //   },
       //   body: JSON.stringify({
-      //     "email": 'mallett002@gmail.com',
+      //     "email": 'mallbert@gmail.com',
       //   })
       // });
       // console.log({res});
@@ -113,6 +130,7 @@ export const getServerSideProps = async (context) => {
       // const result = await res.json();
       // console.log({result});
 
+      /* SEARCH USERS BY EMAIL */
       // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/members?email=mall`, {
       //   headers: {
       //     Authorization: `Bearer ${session.accessToken}`
@@ -121,6 +139,28 @@ export const getServerSideProps = async (context) => {
       // console.log({res});
       // const member = await res.json();
       // console.log(JSON.stringify({member}));
+
+      /* UPDATE INVITATION */
+      // note: get invitations from get board endpoint
+      // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/invitations/mallery@gmail.com`, {
+      //   method: 'PUT',
+      //   headers: {
+      //     Authorization: `Bearer ${session.accessToken}`
+      //   },
+      //   body: JSON.stringify({
+      //     "status": 'ACCEPTED',
+      //   })
+      // });
+      // console.log({res});
+
+      /* DELETE INVITATION */
+      // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/invitations/mallbert@gmail.com`, {
+      //   method: 'DELETE',
+      //   headers: {
+      //     Authorization: `Bearer ${session.accessToken}`
+      //   },
+      // });
+      // console.log({res});
   
       return { props: { gift: null } };      
     } catch (error) {
