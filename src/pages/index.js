@@ -50,6 +50,9 @@ export const getServerSideProps = async (context) => {
 
     try {
       /*CREATE FAMILY*/
+      // Figure out how to upload in image here
+      // google search: upload file from disk nextjs
+      
       // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families`, {
       //   method: 'POST',
       //   headers: {
@@ -170,7 +173,6 @@ export const getServerSideProps = async (context) => {
       //   },
       // });
       // console.log({res});
-  
       return { props: { gift: null } };      
     } catch (error) {
       console.log({error});
