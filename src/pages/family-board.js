@@ -25,11 +25,14 @@ const FamilyBoard = (props) => {
 
         const response = await fetch("/api/upload-image", {
             method: "POST",
-            // body: JSON.stringify({ familyImage: image })
             body
         });
-
     };
+
+    const clearImage = () => {
+        setImage(null);
+        setCreateObjectURL(null);
+    }
 
     return (
         <div>
@@ -38,11 +41,18 @@ const FamilyBoard = (props) => {
                 <h4>Select Image</h4>
                 <input type="file" name="myImage" onChange={uploadToClient} />
                 <button
+                    style={{marginRight: 20}}
                     className="btn btn-primary"
                     type="submit"
                     onClick={uploadToServer}
                 >
                     Save Image
+                </button>
+                <button
+                    onClick={clearImage}
+                    className="btn btn-primary"
+                >
+                    Clear Image
                 </button>
             </div>
         </div>
