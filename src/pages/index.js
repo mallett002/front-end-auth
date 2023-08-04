@@ -1,3 +1,4 @@
+// import fs from 'fs';
 import {
   LoginButton,
   LogoutButton,
@@ -50,9 +51,6 @@ export const getServerSideProps = async (context) => {
 
     try {
       /*CREATE FAMILY*/
-      // Figure out how to upload in image here
-      // google search: upload file from disk nextjs
-      
       // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families`, {
       //   method: 'POST',
       //   headers: {
@@ -63,7 +61,23 @@ export const getServerSideProps = async (context) => {
       // const json = await res.json();
       // console.log({json});
 
-      const familyId = '69b6e448-c210-4dd3-82cc-aba728bece2b';
+      const familyId = '15798ce5-2c03-449d-979e-24ff5d7fd496';
+
+      
+      /*UPLOAD FAMILY IMAGE*/
+      // const image = fs.readFileSync('coolfunc.png')
+      // const blob = Buffer.from(image);
+      // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/image`, {
+      //   method: 'POST',
+      //   headers: {
+      //     Authorization: `Bearer ${session.accessToken}`,
+      //     Accept: 'image/png'
+      //   },
+      //   body: blob
+      // });
+      // console.log({res});
+      // const json = await res.json();
+      // console.log({json});
 
       /*CREATE GIFT*/
       // const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/members/mallett002@gmail.com/gifts/`, {

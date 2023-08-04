@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "aws-jwt-verify": "^4.0.0",
+    "axios": "^1.4.0",
     "next": "13.4.4",
     "next-auth": "^4.22.1",
     "react": "18.2.0",
