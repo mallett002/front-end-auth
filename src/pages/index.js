@@ -56,12 +56,12 @@ export const getServerSideProps = async (context) => {
       //   headers: {
       //     Authorization: `Bearer ${session.accessToken}`
       //   },
-      //   body: JSON.stringify({familyName: 'Mallett', familyImage: 'somerandomimage', email: 'mallett002@gmail.com'})
+      //   body: JSON.stringify({familyName: 'boraah', familyImage: 'somerandomimage', email: 'mallett002@gmail.com'})
       // });
       // const json = await res.json();
       // console.log({json});
 
-      const familyId = '15798ce5-2c03-449d-979e-24ff5d7fd496';
+      const familyId = '94548e87-e9b3-4917-8594-bfb1a99a4f94';
 
       
       /*UPLOAD FAMILY IMAGE*/
@@ -71,9 +71,8 @@ export const getServerSideProps = async (context) => {
       //   method: 'POST',
       //   headers: {
       //     Authorization: `Bearer ${session.accessToken}`,
-      //     Accept: 'image/png'
       //   },
-      //   body: blob
+      //   body: JSON.stringify({contentType: 'image/png'})
       // });
       // console.log({res});
       // const json = await res.json();

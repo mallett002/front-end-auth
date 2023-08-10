@@ -25,18 +25,27 @@ export default async function handler(req, res) {
     // });
 
     const familyId = '15798ce5-2c03-449d-979e-24ff5d7fd496';
+
+    // get the upload pre-signed url:
     const response = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/image`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${session.accessToken}`,
-            'Content-Type': 'multipart/form-data'
-            // Accept: 'image/png'
         },
-        body: req.body
+        body: JSON.stringify({ contentType: 'image/png' }),
     });
-    console.log({ response });
-    const json = await response.json();
-    console.log({ json });
 
-    res.status(201).json({ message: 'created' });
+    console.log({ response });
+    const { imageUploadUrl } = await response.json();
+
+    // put the image in s3:
+    console.log({ body: req.body });
+    const result = await fetch(imageUploadUrl, {
+        method: "PUT",
+        body: req.body,
+    });
+
+
+
+    res.status(201).send({ message: 'created' });
 }
