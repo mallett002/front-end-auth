@@ -33,9 +33,13 @@ export const getServerSideProps = async (context) => {
             headers: {
                 Authorization: `Bearer ${session.accessToken}`,
             },
-            body: JSON.stringify({ operation: 'GET_OBJECT', contentType: 'image/png' }),
+            body: JSON.stringify({ 
+                operation: 'GET_OBJECT',
+                contentType: 'image/jpeg' // could store the key in dynamo and then get content type off that. Ex: [familyId].jpg | [familyId].png. Or just store the content type..
+                // contentType: 'image/png'
+            }),
         });
-        
+
         const { fetchImageUrl } = await preSignedURLResponse.json();
 
         // // fetch the image with the url:

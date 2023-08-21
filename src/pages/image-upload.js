@@ -11,7 +11,7 @@ const FamilyImageUploader = () => {
     };
 
     const uploadFile = async () => {
-        const res = await fetch('/api/upload-image');
+        const res = await fetch(`/api/upload-image?fileType=${file.type}`);
         const { imageUploadUrl } = await res.json();
         console.log(imageUploadUrl);
 
