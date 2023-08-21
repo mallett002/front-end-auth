@@ -1,66 +1,63 @@
-import React from "react";
-import "react-dropzone-uploader/dist/styles.css";
-import Dropzone from "react-dropzone-uploader";
+import React, { useEffect, useState } from "react";
+import { FileUploader } from "react-drag-drop-files";
+import Image from 'next/image';
 
 
+const FamilyImageUploader = () => {
+    const [file, setFile] = useState(null);
 
-// Maybe this would work better: https://www.npmjs.com/package/react-drag-drop-files
-const Uploader = () => {
-    //   const axios = require("axios").default;
-    const getUploadParams = () => {
-        return { url: '/api/upload-image' }
-    }
-
-    const handleChangeStatus = ({ meta, remove }, status) => {
-        console.log(status, meta);
+    const handleChange = (file) => {
+        setFile(file);
     };
 
-    const handleSubmit = async (files, allFiles) => {
-        const file = files[0];
+    const uploadFile = async () => {
+        const res = await fetch('/api/upload-image');
+        const { imageUploadUrl } = await res.json();
+        console.log(imageUploadUrl);
 
-        console.log({ file });
-
-        const form = new FormData();
-        form.append('file', file);
-        form.append('contentLength', file.size);
-        // Object.entries(fields).forEach(([field, value]) => {
-        //     form.append(field, value);
-        // });
-        // form.append("file", createReadStream("path/to/a/file"));
-        // form.submit(url, (err, res) => {
-        //     //handle the response
-        // });
-
-
-        // GET request: presigned URL
-        // const response = await axios({
-        //   method: "POST",
-        //   url: `${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/image`,
-        // });
-
-        // PUT request: upload file to S3
-        const result = await fetch('/api/upload-image', {
-            method: "POST",
-            body: form,
+        const upload = await fetch(imageUploadUrl, {
+            method: 'PUT',
+            body: file,
+            headers: { 'Content-Type': file.type },
         });
 
-        console.log({uploadClientResult: result});
+        setFile(null);
 
-        allFiles.forEach(f => f.remove());
-    };
+        if (upload.ok) {
+            console.log('Uploaded successfully!');
+        } else {
+            console.error('Upload failed.');
+        }
+    }
+
+    if (file) {
+        console.log({fileType: file.type});
+    }
+    
+
+    const cancelUpload = () => {
+        setFile(null);
+    }
 
     return (
         <>
-            <Dropzone
-                getUploadParams={getUploadParams}
-                onChangeStatus={handleChangeStatus}
-                onSubmit={handleSubmit}
-                styles={{ dropzone: { minHeight: 200, maxHeight: 250 } }}
+            <FileUploader
+                handleChange={handleChange}
+                name="file"
+                types={["JPG", "PNG"]}
+                maxSize={5}
             />
-        </>
+            <p>{file ? `File name: ${file.name}` : "no files uploaded yet"}</p>
+            {file && (
+                <div style={{ display: 'flex', width: 200, justifyContent: 'space-between' }}>
+                    <button onClick={uploadFile}>save</button>
+                    <button onClick={cancelUpload}>cancel</button>
+                </div>
+            )}
 
+
+        </>
     );
 };
-<Uploader />;
 
-export default Uploader;
+export default FamilyImageUploader;
