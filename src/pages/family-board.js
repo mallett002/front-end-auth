@@ -7,7 +7,7 @@ const FamilyBoard = (props) => {
 
     return (
         <div>
-            <p>your image:</p>
+            <p style={{marginBottom: 10}}>Family {props.familyName}'s board</p>
             <Image
                 alt="my-image"
                 src={props.imageUrl}
@@ -15,6 +15,12 @@ const FamilyBoard = (props) => {
                 height={100}
                 onError={(error) => console.log(error)}
             />
+            {props.members && props.members.length && (
+                props.members.map((member) => (<div style={{marginTop: 10, marginBottom: 10}}>
+                    <p>Email: {member.email}</p>
+                    <p>alias: {member.alias}</p>
+                </div>))
+            )}
         </div>
 
     );
@@ -26,17 +32,27 @@ export const getServerSideProps = async (context) => {
     const session = await getSession(context);
 
     if (session) {
-        // get pre-signed image url:
-        const familyId = '15798ce5-2c03-449d-979e-24ff5d7fd496';
+
+        const familyId = '94548e87-e9b3-4917-8594-bfb1a99a4f94';
+        
+        // Get family board data:
+        const res = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/board`, {
+            headers: {
+                Authorization: `Bearer ${session.accessToken}`
+            }
+        });
+        const { imageContentType, familyName, members } = await res.json();
+
+
+        // get pre-signed image url for family:
         const preSignedURLResponse = await fetch(`${process.env.WISH_LIST_SERVER_DOMAIN}/families/${familyId}/image`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${session.accessToken}`,
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 operation: 'GET_OBJECT',
-                contentType: 'image/jpeg' // could store the key in dynamo and then get content type off that. Ex: [familyId].jpg | [familyId].png. Or just store the content type..
-                // contentType: 'image/png'
+                contentType: imageContentType
             }),
         });
 
@@ -45,9 +61,15 @@ export const getServerSideProps = async (context) => {
         // // fetch the image with the url:
         // const fetchImageResponse = await fetch(fetchImageUrl);
         // console.log({fetchImageResponse})
-        return { props: { imageUrl: fetchImageUrl } }
+        return {
+            props: {
+                imageUrl: fetchImageUrl,
+                familyName,
+                members
+            }
+        }
     }
 
-    return { props: { imageUrl: fetchImageUrl } }
+    return { props: { imageUrl: '' } }
 
 };
